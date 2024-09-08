@@ -98,6 +98,7 @@ div.hero h2 {
 }
 
 .skip-to-content {
-  height: 50px;
-  margin-top: -50px;
+  left: 50%;
+  position: absolute;
+  transform: translateY(-100%);
 }
