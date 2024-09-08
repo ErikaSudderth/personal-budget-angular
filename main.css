@@ -96,3 +96,8 @@ div.hero h2 {
     margin: 10px;
   }
 }
+
+.skip-to-content {
+  height: 50px;
+  margin-top: -50px;
+}
