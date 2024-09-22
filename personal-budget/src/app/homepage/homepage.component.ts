@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Chart } from 'chart.js';
+import { Chart } from 'chart.js/auto';
+import { DataService, BudgetResponse } from '../data.service';
 
 interface DataSource {
   datasets: {
@@ -34,17 +35,28 @@ export class HomepageComponent implements OnInit {
     labels: [],
   };
 
-  constructor(private http: HttpClient, private renderer: Renderer2) {}
+  constructor(
+    private http: HttpClient,
+    private renderer: Renderer2,
+    public dataService: DataService
+  ) {}
 
   ngOnInit(): void {
-    this.http.get('http://localhost:3000/budget').subscribe((res: any) => {
-      console.log(res.myBudget);
+    this.dataService.fetchDataFromBackend().subscribe((res: BudgetResponse) => {
       for (var i = 0; i < res.myBudget.length; i++) {
         this.dataSource.datasets[0].data[i] = res.myBudget[i].budget;
         this.dataSource.labels[i] = res.myBudget[i].title;
       }
       this.createChart();
     });
+    // this.http.get('http://localhost:3000/budget').subscribe((res: any) => {
+    //   console.log(res.myBudget);
+    //   for (var i = 0; i < res.myBudget.length; i++) {
+    //     this.dataSource.datasets[0].data[i] = res.myBudget[i].budget;
+    //     this.dataSource.labels[i] = res.myBudget[i].title;
+    //   }
+    //   this.createChart();
+    // });
   }
 
   createChart() {
